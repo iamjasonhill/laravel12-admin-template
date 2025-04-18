@@ -36,6 +36,6 @@
 </div>
 
 @livewireScripts
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+{{-- Alpine.js is already included by Livewire, so we don't need to load it again --}}
 </body>
 </html>

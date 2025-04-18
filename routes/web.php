@@ -21,6 +21,9 @@ Route::view('profile', 'profile')
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     
+    // User Management Route
+    Route::get('/users', App\Livewire\Admin\UserManagement::class)->middleware(['permission:manage users'])->name('users');
+    
     // Email Logs Routes
     Route::prefix('email-logs')->name('email-logs.')->group(function () {
         Route::get('/', function() { 

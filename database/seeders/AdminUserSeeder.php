@@ -41,6 +41,7 @@ class AdminUserSeeder extends Seeder
             'create users',
             'edit users',
             'delete users',
+            'manage users',
             'view email logs',
             'manage email logs',
             'view customers',
