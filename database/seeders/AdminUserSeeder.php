@@ -32,31 +32,8 @@ class AdminUserSeeder extends Seeder
             ]);
         }
         
-        // Create admin role if it doesn't exist
-        $adminRole = Role::firstOrCreate(['name' => 'admin']);
-        
-        // Define permissions
-        $permissions = [
-            'view users',
-            'create users',
-            'edit users',
-            'delete users',
-            'manage users',
-            'view email logs',
-            'manage email logs',
-            'view customers',
-            'edit customers',
-            'view quotes',
-            'edit quotes',
-        ];
-        
-        // Create permissions if they don't exist
-        foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission]);
-        }
-        
-        // Assign all permissions to admin role
-        $adminRole->givePermissionTo(Permission::all());
+        // Get the admin role (should be created by RolesAndPermissionsSeeder)
+        $adminRole = Role::where('name', 'admin')->firstOrFail();
         
         // Assign admin role to user
         $admin->assignRole($adminRole);

@@ -106,6 +106,21 @@
                                 <option value="{{ $availableRole->name }}">{{ ucfirst($availableRole->name) }}</option>
                             @endforeach
                         </select>
+                        <div class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                            @if($role === 'admin')
+                                Full system control with access to all features
+                            @elseif($role === 'manager')
+                                Operational oversight without user management or global settings
+                            @elseif($role === 'accounts')
+                                Financial management including payments, invoices, and payouts
+                            @elseif($role === 'staff')
+                                Day-to-day operations including quotes, bookings, and customer communication
+                            @elseif($role === 'provider')
+                                Limited access to manage assigned quotes and bookings
+                            @elseif($role === 'customer')
+                                Access to own quotes, bookings, and payment options
+                            @endif
+                        </div>
                         @error('role') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                     </div>
                 </div>
@@ -157,8 +172,21 @@
                                 <div class="text-sm text-gray-500 dark:text-gray-300">{{ $user->email }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100">
-                                    {{ ucfirst($user->roles->first()->name ?? 'No Role') }}
+                                @php
+                                    $roleName = $user->roles->first()->name ?? 'No Role';
+                                    $roleColors = [
+                                        'admin' => 'bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-100',
+                                        'manager' => 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100',
+                                        'accounts' => 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100',
+                                        'staff' => 'bg-indigo-100 text-indigo-800 dark:bg-indigo-800 dark:text-indigo-100',
+                                        'provider' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100',
+                                        'customer' => 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100',
+                                        'default' => 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-100',
+                                    ];
+                                    $colorClass = $roleColors[$roleName] ?? $roleColors['default'];
+                                @endphp
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $colorClass }}">
+                                    {{ ucfirst($roleName) }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
